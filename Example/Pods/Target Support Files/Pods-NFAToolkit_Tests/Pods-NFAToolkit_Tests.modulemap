@@ -1,0 +1,6 @@
+framework module Pods_NFAToolkit_Tests {
+  umbrella header "Pods-NFAToolkit_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
