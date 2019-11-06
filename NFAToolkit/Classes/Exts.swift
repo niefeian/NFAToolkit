@@ -186,11 +186,8 @@ public extension UILabel {
         self.attributedText = NSAttributedString(string: text, attributes: attributes)
     }
     
-    func setLineSpacing(_ lineSpacing:CGFloat = 5 ) {
-        let paraph = NSMutableParagraphStyle()
-        paraph.lineSpacing = lineSpacing
-        let attributes = [NSAttributedString.Key.paragraphStyle: paraph]
-        self.attributedText = NSAttributedString(string: self.text ?? "", attributes: attributes)
+    func setLineSpacing(_ lineSpacing : CGFloat = 5 ) {
+        self.setLable(text: self.text ?? "", lineSpacing: lineSpacing)
     }
     
     func setAttrString(string : String , lineSpacing:CGFloat = 5 , array : [(String,UIColor,CGFloat)]) {
@@ -223,7 +220,7 @@ public extension UILabel {
 }
 
 
-extension NSDictionary {
+public extension NSDictionary {
     
     func string(forKey key : String, _ defaultValue : String = "") -> String{
         return object(forKey: key) as? String ?? defaultValue
@@ -248,7 +245,7 @@ extension NSDictionary {
     }
 }
 
- extension Int {
+ public extension Int {
     var cn1: String {
         get {
             if self == 0 {
