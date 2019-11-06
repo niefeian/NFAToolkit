@@ -9,6 +9,13 @@
 import Foundation
 import UIKit
 
+public func printLog<T>(_ message : T, file : String = #file, method : String = #function, line : Int = #line) {
+    #if DEBUG
+    print(file)
+    print("\(line),\(method):\n\(message)")
+    #endif
+}
+
 public extension String {
     // 从0开始截取到to的位置。如果to的位置超过文本的长度，返回原始文本。注意需要截取到的位置是原始位置+1，如20160101要截取年度，substringToIndex(5).注意参数是5，不是4
     func substringToIndex(_ to : Int) -> String {
