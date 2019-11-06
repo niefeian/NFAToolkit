@@ -16,6 +16,35 @@ public func printLog<T>(_ message : T, file : String = #file, method : String = 
     #endif
 }
 
+public let AppWidth: CGFloat = UIScreen.main.bounds.size.width
+public let AppHeight: CGFloat = UIScreen.main.bounds.size.height
+
+public func colorConversion(colorValue: String, alpha: CGFloat = 1) -> UIColor{
+    var str = colorValue.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
+    if str.hasPrefix("#") {
+        str = str.replacingOccurrences(of: "#", with: "")
+    }
+    if str.count != 6 {
+        return .white
+    }
+    let redStr = str.prefix(2)
+    let greenStr = str.subString(start: 2, length: 2)
+    let blueStr = str.subString(start: 4)
+    var r:UInt64 = 0, g:UInt64 = 0, b:UInt64 = 0
+    Scanner(string: String(redStr)).scanHexInt64(&r)
+    Scanner(string: greenStr).scanHexInt64(&g)
+    Scanner(string: blueStr).scanHexInt64(&b)
+    return UIColor(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: alpha)
+}
+
+public func pd6sW(_ pd : CGFloat) -> CGFloat{
+    return pd * AppWidth / 375
+}
+
+public func pd6sH(_ pd : CGFloat) -> CGFloat{
+    return pd * AppHeight / 568.0
+}
+
 public extension String {
     // 从0开始截取到to的位置。如果to的位置超过文本的长度，返回原始文本。注意需要截取到的位置是原始位置+1，如20160101要截取年度，substringToIndex(5).注意参数是5，不是4
     func substringToIndex(_ to : Int) -> String {
