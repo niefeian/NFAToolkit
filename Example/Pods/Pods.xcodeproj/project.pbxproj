@@ -107,6 +107,7 @@
 		A61348E423718A040057A753 /* DateUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61348DF23718A040057A753 /* DateUtil.swift */; };
 		A61348E523718A040057A753 /* Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61348E023718A040057A753 /* Tools.swift */; };
 		A61348E723718B850057A753 /* IPageDataPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = A61348E623718B850057A753 /* IPageDataPost.swift */; };
+		A647397A2372CECB0053B23A /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = A64739792372CECB0053B23A /* Window.swift */; };
 		A787308C5CA0BCA2B3A706F44CD5F7B4 /* ErrorUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D13891721C16921F933F4AFDA15D530 /* ErrorUtility.swift */; };
 		A9303001CC6899699410252B570C3FA2 /* NBSMockedApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 9924EF4EE42C70AA90AE8607FA055F6E /* NBSMockedApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB2F79D3BF6F4CB33383BDBA189AA12B /* AssertionDispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0967ED74515F879701B2744E23ABE3 /* AssertionDispatcher.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -356,6 +357,7 @@
 		A61348DF23718A040057A753 /* DateUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateUtil.swift; path = NFAToolkit/Classes/DateUtil.swift; sourceTree = "<group>"; };
 		A61348E023718A040057A753 /* Tools.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Tools.swift; path = NFAToolkit/Classes/Tools.swift; sourceTree = "<group>"; };
 		A61348E623718B850057A753 /* IPageDataPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IPageDataPost.swift; path = NFAToolkit/Classes/IPageDataPost.swift; sourceTree = "<group>"; };
+		A64739792372CECB0053B23A /* Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Window.swift; path = NFAToolkit/Classes/Window.swift; sourceTree = "<group>"; };
 		A69EB16895D0FDA9699EED91A3CFB841 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		A78454EC7E2E54A83DCC7BE51BFD1ADB /* FBSnapshotTestController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSnapshotTestController.h; path = FBSnapshotTestCase/FBSnapshotTestController.h; sourceTree = "<group>"; };
 		A78EB9942225A677DFF3AC16983E2C43 /* Nimble.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Nimble.modulemap; sourceTree = "<group>"; };
@@ -567,6 +569,7 @@
 				A61348DD23718A040057A753 /* Exts.swift */,
 				A61348DE23718A040057A753 /* SortUtil.swift */,
 				A61348E023718A040057A753 /* Tools.swift */,
+				A64739792372CECB0053B23A /* Window.swift */,
 				62B96E71EA15EF007BC023340E4BB42D /* Pod */,
 				30B7797AA1F0B0A74F41A15B59A3EB70 /* Support Files */,
 			);
@@ -1210,6 +1213,7 @@
 				11C410135C7E89353B480AC8DE0BFB77 /* UIApplication+StrictKeyWindow.m in Sources */,
 				2DCFF0CE0BD295F1D46D3247F36B192C /* UIImage+Compare.m in Sources */,
 				14AD81D52FAD9CF2C065C61FB00C3B4F /* UIImage+Diff.m in Sources */,
+				A647397A2372CECB0053B23A /* Window.swift in Sources */,
 				A61348E423718A040057A753 /* DateUtil.swift in Sources */,
 				A61348E523718A040057A753 /* Tools.swift in Sources */,
 				A525E29E0A8079B35B793D8A2B5FBDF2 /* UIImage+Snapshot.m in Sources */,
