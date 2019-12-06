@@ -38,8 +38,6 @@ public func colorConversion(colorValue: String, alpha: CGFloat = 1) -> UIColor{
     return UIColor(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: alpha)
 }
 
-
-
 public func pd6sW(_ pd : CGFloat) -> CGFloat{
     return pd * AppWidth / 375
 }
@@ -69,6 +67,7 @@ public extension UIColor {
 }
 
 public extension CGFloat {
+    
     var valueBetweenZeroAndOne: CGFloat {
         return abs(self) > 1 ? 1 : abs(self)
     }
@@ -78,23 +77,23 @@ public extension CGFloat {
     }
 
     var pd6sH : CGFloat {
-        return self * AppWidth / 375
+        return self * AppHeight / 568.0
     }
 
 }
 
 
 public extension Int {
+    
     var pd6sW : CGFloat {
         return CGFloat(self) * AppWidth / 375
     }
 
     var pd6sH : CGFloat {
-        return CGFloat(self) * AppWidth / 375
+        return CGFloat(self) * AppHeight / 568
     }
 
 }
-
 
 
 public extension String {
@@ -179,7 +178,8 @@ public extension String {
 }
 
 public extension Dictionary {
-     mutating func addAll(_ dic : Dictionary) {
+     
+    mutating func addAll(_ dic : Dictionary) {
         for (k , v) in dic {
             self[k] = v
         }
@@ -211,6 +211,23 @@ public extension UIView {
     var height: CGFloat {
         return self.frame.size.height
     }
+    
+    var x: CGFloat {
+        return self.frame.origin.x
+    }
+    
+    var y: CGFloat {
+        return self.frame.origin.y
+    }
+    
+    var maxX: CGFloat {
+        return self.frame.origin.x + self.frame.size.width
+    }
+    
+    var maxY: CGFloat {
+        return self.frame.origin.y + self.frame.size.height
+    }
+    
 }
 
 
@@ -298,7 +315,64 @@ public extension UILabel {
             attrString.addAttributes(arr.1, range:NSRange(location: string.positionOf(sub: arr.0), length: arr.0.count))
        }
        self.attributedText = attrString
-      }
+    }
+    
+    func setAttrStrings(string : String , lineSpacing:CGFloat = 5 , array : [(String,UIColor,CGFloat)], arrays : [(String,[NSAttributedString.Key : Any])]) {
+           let paraph = NSMutableParagraphStyle()
+           paraph.lineSpacing = lineSpacing
+           
+        let attributes = [NSAttributedString.Key.paragraphStyle: paraph]
+        let attrString = NSMutableAttributedString(string: string , attributes: attributes)
+     
+        for arr in array {
+            let attr: [NSAttributedString.Key : Any] = [.font: UIFont.systemFont(ofSize: arr.2),.foregroundColor: arr.1]
+            let i  = string.positionOf(sub: arr.0)
+            if  i >= 0  && i < string.count {
+                attrString.addAttributes(attr, range:NSRange(location: string.positionOf(sub: arr.0), length: arr.0.count))
+            }
+        }
+     
+        for arr in arrays {
+            let i  = string.positionOf(sub: arr.0)
+            if  i >= 0  && i < string.count {
+                attrString.addAttributes(arr.1, range:NSRange(location:i, length: arr.0.count))
+
+            }
+        }
+        
+        self.attributedText = attrString
+    }
+    
+    func setAttrString2(string : String , lineSpacing:CGFloat = 5 , array : [([String],UIColor,CGFloat)]) {
+        let paraph = NSMutableParagraphStyle()
+        paraph.lineSpacing = lineSpacing
+        let attributes = [NSAttributedString.Key.paragraphStyle: paraph]
+        let attrString = NSMutableAttributedString(string: string , attributes: attributes)
+
+        for arr in array {
+        let attr: [NSAttributedString.Key : Any] = [.font: UIFont.systemFont(ofSize: arr.2),.foregroundColor: arr.1]
+        for subStr in arr.0{
+            let i  = string.positionOf(sub: subStr)
+            if  i >= 0  && i < string.count {
+             attrString.addAttributes(attr, range:NSRange(location: string.positionOf(sub: subStr), length: subStr.count))
+            }
+            }
+        }
+        self.attributedText = attrString
+    }
+    
+    func setFont(_ font : CGFloat){
+        self.font = UIFont.systemFont(ofSize: font.pd6sW)
+    }
+
+    func setFont(_ font : CGFloat , weight : CGFloat){
+        if #available(iOS 8.2, *) {
+            self.font = UIFont.systemFont(ofSize: font.pd6sW, weight: UIFont.Weight.init(weight.pd6sW))
+        } else {
+            self.font = UIFont.systemFont(ofSize: font.pd6sW)
+            // Fallback on earlier versions
+        }
+    }
 }
 
 
