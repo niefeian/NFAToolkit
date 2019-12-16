@@ -102,18 +102,20 @@ open class Tools {
     
     /// 回退到指定的界面
     open class func popToView(_ baseView : UIViewController, toViewClass : AnyClass) {
-        let views = baseView.navigationController?.viewControllers
-        var toView : UIViewController?
-        for view in views! {
-            let v = view as UIViewController
-            if v.classForCoder == toViewClass {
-                toView = v
-                break
+        if let views = baseView.navigationController?.viewControllers{
+            var toView : UIViewController?
+            for view in views {
+                let v = view as UIViewController
+                if v.classForCoder == toViewClass {
+                    toView = v
+                    break
+                }
+            }
+            if toView != nil {
+                baseView.navigationController?.popToViewController(toView!, animated: true)
             }
         }
-        if toView != nil {
-            baseView.navigationController?.popToViewController(toView!, animated: true)
-        }
+        
     }
     
     /// 构建标题：当文字超长时，采用titleView进行构建，否则下一个试图的title会偏移
@@ -135,7 +137,7 @@ open class Tools {
     }
     
     /// 执行几次的动画
-    class func animationSomeTimes(_ time : TimeInterval = 0.2, count : Int = 1, doing : @escaping CBWithParam, finish : @escaping CB) {
+    open class func animationSomeTimes(_ time : TimeInterval = 0.2, count : Int = 1 , doing : @escaping CBWithParam , doend : @escaping CBWithParam, finish : @escaping CB) {
         if count < 1 {
             return
         }
@@ -143,15 +145,20 @@ open class Tools {
         UIView.animate(withDuration: time, animations: {
             c = count - 1
             doing(c as AnyObject?)
-            
         }, completion: { (Bool) in
             if c > 0 {
-                self.animationSomeTimes(time, count: c, doing: doing, finish: finish)
+                UIView.animate(withDuration: time, animations: {
+                    doend(c as AnyObject?)
+                }, completion: { (Bool) in
+                    self.animationSomeTimes(time, count: c, doing: doing, doend: doend, finish: finish)
+                })
             } else {
                 finish()
             }
-        }) 
+        })  
     }
+    
+    
     
     open class func delay(_ delay:Double, closure:@escaping ()->()) {
         DispatchQueue.main.asyncAfter(
