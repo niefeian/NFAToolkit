@@ -338,14 +338,6 @@ public extension UILabel {
         }
         self.attributedText = attrString
     }
-    
-    func setFontAndWeight(_ font : CGFloat , weight : CGFloat){
-        if #available(iOS 8.2, *) {
-            self.font = UIFont.systemFont(ofSize: pd6sW(font), weight: UIFont.Weight.init(pd6sW(weight)))
-        } else {
-            // Fallback on earlier versions
-        }
-    }
 
     func setAttrStrings(string : String , lineSpacing:CGFloat = 5 , array : [(String,[NSAttributedString.Key : Any])]) {
         let paraph = NSMutableParagraphStyle()
@@ -390,6 +382,7 @@ public extension NSDictionary {
 }
 
  public extension Int {
+   
     var cn1: String {
         get {
             if self == 0 {
@@ -448,4 +441,15 @@ public extension NSDictionary {
             return cn
         }
     }
+}
+
+public extension UITextField{
+    
+    func setAttributedPlaceholderIColor(_ color : UIColor) {
+        if let string = self.placeholder {
+            self.attributedPlaceholder =  NSAttributedString.init(string:string, attributes: [
+                NSAttributedString.Key.foregroundColor:color])
+        }
+    }
+       
 }
