@@ -20,6 +20,25 @@ public let AppWidth: CGFloat = UIScreen.main.bounds.size.width
 public let AppHeight: CGFloat = UIScreen.main.bounds.size.height
 
 
+public func colorConversion(colorValue: String, alpha: CGFloat = 1) -> UIColor{
+    var str = colorValue.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
+    if str.hasPrefix("#") {
+        str = str.replacingOccurrences(of: "#", with: "")
+    }
+    if str.count != 6 {
+        return .white
+    }
+    let redStr = str.prefix(2)
+    let greenStr = str.subString(start: 2, length: 2)
+    let blueStr = str.subString(start: 4)
+    var r:UInt64 = 0, g:UInt64 = 0, b:UInt64 = 0
+    Scanner(string: String(redStr)).scanHexInt64(&r)
+    Scanner(string: greenStr).scanHexInt64(&g)
+    Scanner(string: blueStr).scanHexInt64(&b)
+    return UIColor(red: CGFloat(r)/255.0, green: CGFloat(g)/255.0, blue: CGFloat(b)/255.0, alpha: alpha)
+}
+
+
 public func pd6sW(_ pd : CGFloat) -> CGFloat{
     return pd * AppWidth / 375
 }
