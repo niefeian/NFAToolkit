@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AdSupport
 
 open class KeychainManager {
     // TODO: 创建查询条件
@@ -87,14 +88,17 @@ open class KeychainManager {
         SecItemDelete(keyChainDeleteMutableDictionary)
     }
     
-   open class func getID_FV() -> String{
-        if let id_fv = keyChainReadData(identifier: "id_fv") as? String , id_fv.count > 0 {
-            return id_fv
+    open class func getIMEI() -> String{
+         if let imei = keyChainReadData(identifier: "imei") as? String , imei.count > 0 {
+             return imei
+         }
+        var imei = ASIdentifierManager.shared().advertisingIdentifier.uuidString
+        let reimei = imei.replacingOccurrences(of: "0", with: "").replacingOccurrences(of: "-", with: "")
+        if reimei.count < 10 {
+            imei = UIDevice.current.identifierForVendor?.uuidString ?? getUUID()
         }
-   
-        let id_fv = UIDevice.current.identifierForVendor?.uuidString ?? getUUID()
-        let _ = keyChainSaveData(data: id_fv, withIdentifier: "id_fv")
-        return id_fv
+         let _ = keyChainSaveData(data: imei, withIdentifier: "imei")
+         return imei
     }
     
     class func getUUID() -> String{
