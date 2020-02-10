@@ -355,4 +355,49 @@ open class Tools {
     }
 
 
+    open  class func addTitleView(view : UIView, navigationItem : UINavigationItem, title : String?) {
+
+        let navigationH : CGFloat = UIApplication.shared.statusBarFrame.height == 44 ? 88 : 64
+        let titleView = UILabel(frame: CGRect(x: 0 , y: 0 , width: UIScreen.main.bounds.size.width - 100, height: navigationH))
+          navigationItem.titleView = titleView
+          DispatchQueue.main.async {
+              let width = UIScreen.main.bounds.size.width  - 100
+              let centerView = UILabel()
+              centerView.frame = CGRect(x: (UIScreen.main.bounds.size.width - width) / 2, y: 20, width: width, height: navigationH)
+              centerView.frame = (view.window?.convert(centerView.frame, to: navigationItem.titleView))!
+              centerView.text = title
+              centerView.textAlignment = .center
+              centerView.font = UIFont.boldSystemFont(ofSize: 17)
+              centerView.textColor = UIColor.black
+              navigationItem.titleView?.addSubview(centerView)
+          }
+    }
+    
+    open class func pushView(_ baseView : UIViewController, storyboard : String, identifier : String, hideBottom : Bool = true, animator : Bool = true, removeSelf : Bool = false , isNoContains : Bool = true  , fun:(UIViewController) -> Void) {
+        let bord = UIStoryboard(name: storyboard, bundle: nil)
+        let vw = bord.instantiateViewController(withIdentifier: identifier)
+        let navUI = vw as! UINavigationController
+        let child = navUI.children[0]
+        let childView = child as UIViewController
+        if hideBottom {
+            childView.hidesBottomBarWhenPushed = true
+        }
+        // 禁止重复打开
+        var views = baseView.navigationController?.viewControllers
+        if views?.count ?? 0 > 0  && isNoContains{
+            if childView.classForCoder == views![views!.count - 1].classForCoder {
+                return
+            }
+        }
+        
+        if removeSelf && views != nil {
+            views!.removeLast()
+            views!.append(childView)
+            baseView.navigationController?.setViewControllers(views!, animated: true)
+        } else {
+            baseView.navigationController?.pushViewController(childView, animated: animator)
+        }
+        fun(childView)
+    }
+
 }
