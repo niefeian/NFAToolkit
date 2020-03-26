@@ -22,6 +22,7 @@ public let isIphoneX =  UIApplication.shared.statusBarFrame.height == 44
 public let MainBounds: CGRect = UIScreen.main.bounds
 public let StatusBarH : CGFloat = UIApplication.shared.statusBarFrame.height
 public let ScreenHeightTabBar : CGFloat = UIApplication.shared.statusBarFrame.height == 44 ? 83 : 49
+public let NavigationH  : CGFloat = StatusBarH == 44 ? 88: 64
 
 
 public func pd6sW(_ pd : CGFloat) -> CGFloat{
