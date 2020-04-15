@@ -154,18 +154,28 @@ public extension String {
            return path.appendingPathComponent((self as NSString).lastPathComponent)
        }
     
-        func stringValueDic() -> [String: Any]?{
-            if let data = self.data(using:String.Encoding.utf8){
-                if let dict = try? JSONSerialization.jsonObject(with: data,options: JSONSerialization.ReadingOptions.mutableContainers)as? [String: Any] {
-                    return dict
-                }
+    func stringToDic() -> [String: Any]?{
+        if let data = self.data(using:String.Encoding.utf8){
+            if let dict = try? JSONSerialization.jsonObject(with: data,options: JSONSerialization.ReadingOptions.mutableContainers)as? [String: Any] {
+                return dict
             }
-           return nil
-       }
+        }
+       return nil
+   }
+    
+    func stringToArray() -> Array<Any>?{
+        if let data = self.data(using:String.Encoding.utf8){
+        if let array = try? JSONSerialization.jsonObject(with: data,options: JSONSerialization.ReadingOptions.mutableContainers)as? Array<Any> {
+               return array
+           }
+        }
+        return nil
+    }
 }
 
 public extension Dictionary {
-     mutating func addAll(_ dic : Dictionary) {
+     
+    mutating func addAll(_ dic : Dictionary) {
         for (k , v) in dic {
             self[k] = v
         }
@@ -180,6 +190,16 @@ public extension Dictionary {
     }
 }
 
+public extension Array {
+    
+    func arrayToString() ->String?{
+           if let data = try? JSONSerialization.data(withJSONObject: self,options: []){
+               let str = String(data: data,encoding:String.Encoding.utf8)
+               return str
+           }
+           return nil
+       }
+}
 
 /// 对UIView的扩展
 public extension UIView {
