@@ -205,6 +205,11 @@ public extension String {
        return nil
     }
     
+    
+    func stringToDic() -> [String:Any]? {
+        return self.map
+    }
+    
     var array : Array<Any>?{
         if let data = self.data(using:String.Encoding.utf8){
         if let array = try? JSONSerialization.jsonObject(with: data,options: JSONSerialization.ReadingOptions.mutableContainers)as? Array<Any> {
