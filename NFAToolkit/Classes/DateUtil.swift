@@ -317,36 +317,40 @@ open class DateUtil {
       
       /// 获得显示显示：原始格式：yyyyMMddHHmmss
       open class func getShowTime(_ time : String, format : String = "yyyyMMddHHmmss") -> String{
-          let dateTime = DateUtil.formatStrToDate(time, format: format)
-          let curDate = DateUtil.formatDateToStr(dateTime, format : "yyyy/MM/dd")
-          let today = DateUtil.curDate()
-          let date = DateUtil.formatDateToStr(today, format : "yyyy/MM/dd")
-          var ret : String!
-          if date == curDate {
-              // 同一天
-              let oldTime = DateUtil.formatStrToDate(time, format: format).timeIntervalSince1970
-              let nowTime = getTimeSince1970()
-              let sub = nowTime - oldTime
-              if sub < 60 {
-                  ret = "刚刚"
-              } else if sub < 60 * 60 {
-                  ret = "\(Int(sub / 60))分钟前"
-              } else {
-                  ret = "\(Int(sub / 3600))小时前"
-              }
-          } else {
-              if (date.prefix(5) == curDate.prefix(5)) {
-                  // 同一年
-                  ret = DateUtil.formatDateToStr(dateTime, format : "MM月dd日 HH:mm")
-              } else {
-                  ret = curDate
-              }
-          }
-          return ret
+          return getShowDate(DateUtil.formatStrToDate(time, format: format))
       }
     
+    open class func getShowDate(_ dateTime : Date) -> String {
+        let curDate = DateUtil.formatDateToStr(dateTime, format : "yyyy/MM/dd")
+        let today = DateUtil.curDate()
+        let date = DateUtil.formatDateToStr(today, format : "yyyy/MM/dd")
+        var ret : String!
+        if date == curDate {
+            // 同一天
+            let oldTime = dateTime.timeIntervalSince1970
+            let nowTime = getTimeSince1970()
+            let sub = nowTime - oldTime
+            if sub < 60 {
+                ret = "刚刚"
+            } else if sub < 60 * 60 {
+                ret = "\(Int(sub / 60))分钟前"
+            } else {
+                ret = "\(Int(sub / 3600))小时前"
+            }
+        } else {
+            if (date.prefix(5) == curDate.prefix(5)) {
+                // 同一年
+                ret = DateUtil.formatDateToStr(dateTime, format : "MM月dd日 HH:mm")
+            } else {
+                ret = curDate
+            }
+        }
+        return ret
+    }
+    
+    
     open class func dateToStrt(_ date : Date) -> String {
-           return formatDateToStr(date, format: "yyyy-MM-dd-HH")
+        return formatDateToStr(date, format: "yyyy-MM-dd-HH")
     }
       
       open class func startOfThisWeek() -> Date {

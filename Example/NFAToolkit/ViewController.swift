@@ -18,6 +18,7 @@ class ViewController: UIViewController {
 //        self.view.addSubview(v)
 //        AnimationUtils.scaleAnimation(rotationView: v)
         // Do any additional setup after loading the view, typically from a nib.
+        ChineseConvert.instance.initCode()
     }
 
     override func didReceiveMemoryWarning() {

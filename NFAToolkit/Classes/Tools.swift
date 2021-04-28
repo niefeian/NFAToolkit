@@ -10,10 +10,10 @@ import Foundation
 import UIKit
 
 
-open class Tools {
+@objc open class Tools : NSObject {
     
     /// 清除角标
-    open class func cleanMyAppBadge() {
+    @objc open class func cleanMyAppBadge() {
         let app = UIApplication.shared
         let num = app.applicationIconBadgeNumber
         if num != 0 {
@@ -22,20 +22,20 @@ open class Tools {
         }
     }
     
-    open class func getUUID() -> String{
+    @objc open class func getUUID() -> String{
         let uc = CFUUIDCreate(nil)
         let uuid  = CFUUIDCreateString(nil, uc)
         return uuid! as String
     }
     
     /// 打开新的页面
-    open class func openView(_ baseView : UIViewController, storyboard : String, identifier : String) {
+    @objc open class func openView(_ baseView : UIViewController, storyboard : String, identifier : String) {
         func fun(_ view : UIViewController){
         }
         openView(baseView, storyboard: storyboard, identifier: identifier, fun: fun)
     }
     
-    open class func openView(_ baseView : UIViewController, storyboard : String, identifier : String, fun:(UIViewController) -> Void) {
+    @objc open class func openView(_ baseView : UIViewController, storyboard : String, identifier : String, fun:(UIViewController) -> Void) {
         let bord = UIStoryboard(name: storyboard, bundle: nil)
         
         let vw = bord.instantiateViewController(withIdentifier: identifier)
@@ -45,13 +45,13 @@ open class Tools {
     }
     
     /// 转场用场景切换
-    open class func pushView(_ baseView : UIViewController, storyboard : String, identifier : String) {
+    @objc open class func pushView(_ baseView : UIViewController, storyboard : String, identifier : String) {
         func fun(_ view : UIViewController){
         }
         self.pushView(baseView, storyboard: storyboard, identifier: identifier, fun: fun)
     }
     
-    open class func pushTabView(_ baseView : UIViewController, storyboard : String, identifier : String, fun:(UIViewController) -> Void) {
+    @objc open class func pushTabView(_ baseView : UIViewController, storyboard : String, identifier : String, fun:(UIViewController) -> Void) {
         let bord = UIStoryboard(name: storyboard, bundle: nil)
         
         let vw = bord.instantiateViewController(withIdentifier: identifier)
@@ -59,7 +59,7 @@ open class Tools {
         fun(vw as UIViewController)
     }
     
-    open class func pushView(_ baseView : UIViewController, storyboard : String, identifier : String, hideBottom : Bool = true, animator : Bool = true, removeSelf : Bool = false, fun:(UIViewController) -> Void) {
+    @objc open class func pushView(_ baseView : UIViewController, storyboard : String, identifier : String, hideBottom : Bool = true, animator : Bool = true, removeSelf : Bool = false, fun:(UIViewController) -> Void) {
         let bord = UIStoryboard(name: storyboard, bundle: nil)
         let vw = bord.instantiateViewController(withIdentifier: identifier)
         let navUI = vw as! UINavigationController
@@ -87,7 +87,7 @@ open class Tools {
         fun(childView)
     }
     
-    open class func pushView(_ baseView : UIViewController, toView : UIViewController , hideBottom : Bool = true, animator : Bool = true , repeatSelf : Bool = true , removeSelf : Bool = false, fun:(UIViewController) -> Void) {
+    @objc open class func pushView(_ baseView : UIViewController, toView : UIViewController , hideBottom : Bool = true, animator : Bool = true , repeatSelf : Bool = true , removeSelf : Bool = false, fun:(UIViewController) -> Void) {
            let childView = toView
            if hideBottom {
                childView.hidesBottomBarWhenPushed = true
@@ -112,7 +112,7 @@ open class Tools {
     }
     
     /// 以根节点的方式打开
-    open class func rootView(_ window : UIWindow, storyboard : String, identify : String) {
+    @objc open class func rootView(_ window : UIWindow, storyboard : String, identify : String) {
         let bord = UIStoryboard(name: storyboard, bundle: nil)
         let vw = bord.instantiateViewController(withIdentifier: identify)
         window.rootViewController = vw;
@@ -120,12 +120,12 @@ open class Tools {
     }
     
     /// 转场回退
-    open class func popView(_ baseView : UIViewController) {
+    @objc open class func popView(_ baseView : UIViewController) {
         baseView.navigationController?.popViewController(animated: true)
     }
     
     /// 回退到指定的界面
-    open class func popToView(_ baseView : UIViewController, toViewClass : AnyClass) -> Bool{
+    @objc open class func popToView(_ baseView : UIViewController, toViewClass : AnyClass) -> Bool{
         if let views = baseView.navigationController?.viewControllers{
             var toView : UIViewController?
             for view in views {
@@ -144,7 +144,7 @@ open class Tools {
     }
     
     /// 构建标题：当文字超长时，采用titleView进行构建，否则下一个试图的title会偏移
-    open class func addTitleView(view : UIView, navigationItem : UINavigationItem, title : String? , textColor : UIColor = UIColor.black) {
+    @objc open class func addTitleView(view : UIView, navigationItem : UINavigationItem, title : String? , textColor : UIColor = UIColor.black) {
         let navigationH  : CGFloat = UIApplication.shared.statusBarFrame.height == 44 ? 88: 64
         let titleView = UILabel(frame: CGRect(x: navigationH - 40, y: 0, width: UIScreen.main.bounds.size.width - 100, height: 30))
         navigationItem.titleView = titleView
@@ -162,7 +162,7 @@ open class Tools {
     }
     
     /// 执行几次的动画
-    open class func animationSomeTimes(_ time : TimeInterval = 0.2, count : Int = 1 , doing : @escaping CBWithParam , doend : @escaping CBWithParam, finish : @escaping CB) {
+    @objc open class func animationSomeTimes(_ time : TimeInterval = 0.2, count : Int = 1 , doing : @escaping CBWithParam , doend : @escaping CBWithParam, finish : @escaping CB) {
         if count < 1 {
             return
         }
@@ -185,13 +185,13 @@ open class Tools {
     
     
     
-    open class func delay(_ delay:Double, closure:@escaping ()->()) {
+    @objc open class func delay(_ delay:Double, closure:@escaping ()->()) {
         DispatchQueue.main.asyncAfter(
             deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
     }
     
     /// 非空校验
-    open class func validateEmpty(_ baseView : UIViewController, msgs : [String], textFields : [UITextField]) -> Bool {
+    @objc open class func validateEmpty(_ baseView : UIViewController, msgs : [String], textFields : [UITextField]) -> Bool {
         let count = msgs.count
         for i in 0 ..< count {
             if (textFields[i].text == nil || textFields[i].text == "") {
@@ -202,7 +202,7 @@ open class Tools {
     }
     
     /// 包含
-    open class func contains(_ arrays : [AnyObject], key : String) -> Bool {
+    @objc open class func contains(_ arrays : [AnyObject], key : String) -> Bool {
         let contain = arrays.contains { (element) -> Bool in
             let ele = element as! String
             if ele == key {
@@ -214,7 +214,7 @@ open class Tools {
     }
     
     /// 是否为空
-    open class func isEmpty(_ obj : AnyObject?) -> Bool {
+    @objc open class func isEmpty(_ obj : AnyObject?) -> Bool {
         if obj == nil {
             return true
         }
@@ -231,7 +231,7 @@ open class Tools {
         return false
     }
     /// 主要用于tableViewCell之类的动画显示。从底部慢慢滑上来出现
-    open class func displayViewAnimationMoveIn(_ view: UIView, offsetY: CGFloat, duration: TimeInterval) {
+    @objc open class func displayViewAnimationMoveIn(_ view: UIView, offsetY: CGFloat, duration: TimeInterval) {
         
         view.transform = CGAffineTransform(translationX: 0, y: offsetY)
         
@@ -241,7 +241,7 @@ open class Tools {
     }
     
     /// 主要用于tableViewCell之类的动画显示。从透明到非透明（淡入）
-    open class func displayViewAnimationFadeIn(_ view: UIView, defaultAlpha : CGFloat = 0, duration: TimeInterval) {
+    @objc open class func displayViewAnimationFadeIn(_ view: UIView, defaultAlpha : CGFloat = 0, duration: TimeInterval) {
         view.alpha = defaultAlpha
         UIView.animate(withDuration: duration, animations: { () -> Void in
             view.alpha = 1
@@ -249,12 +249,12 @@ open class Tools {
     }
     
     /// 隐藏、显示nav标题
-    open class func tapToggleNavBarHidden(_ navigationController : UINavigationController) {
+    @objc open class func tapToggleNavBarHidden(_ navigationController : UINavigationController) {
         navigationController.setNavigationBarHidden(!navigationController.isNavigationBarHidden, animated: true)
     }
     
     /// 清除tab页签上的横线
-    open class func removeTabBarTopLine(_ tabBar : UITabBar) {
+    @objc open class func removeTabBarTopLine(_ tabBar : UITabBar) {
         
         // 去掉原有的tab栏上的顶部横向
         let rect = CGRect(x: 0, y: 0, width: tabBar.frame.size.width, height: tabBar.frame.size.height)
@@ -269,13 +269,13 @@ open class Tools {
     }
     
     /// 圆角
-    open class func setCornerRadius(_ view : UIView, rate : CGFloat = 5) {
+    @objc open class func setCornerRadius(_ view : UIView, rate : CGFloat = 5) {
         view.layer.masksToBounds = true
         view.layer.cornerRadius = rate
     }
     
     /// 圆形图标
-    open class func setCircleCornerRadius(_ view : UIView) {
+    @objc open class func setCircleCornerRadius(_ view : UIView) {
         view.layer.masksToBounds = true
         let r = view.frame.size.width / 2
         view.layer.cornerRadius = r
@@ -289,13 +289,13 @@ open class Tools {
     }
     
     /// 旋转角度。传入角度，正数为顺时针，负数为逆时针，如逆时针旋转25度：transformRotation(25)
-    open class func transformRotation(_ angle : Double) -> CGAffineTransform {
+    @objc open class func transformRotation(_ angle : Double) -> CGAffineTransform {
         let r : Double = angle / 180
         return CGAffineTransform(rotationAngle: CGFloat(-1 * Double.pi * r))
     }
     
     /// 构建数组对应的json字符串
-    open class func arraysToJson(_ arrs : NSArray, key : String) -> String? {
+    @objc open class func arraysToJson(_ arrs : NSArray, key : String) -> String? {
         let d = NSMutableArray()
         for data in arrs {
             let dic = NSMutableDictionary()
@@ -320,7 +320,7 @@ open class Tools {
     }
 
     // 使用16进制颜色
-    open class func colorConversion(colorValue: String, alpha: CGFloat = 1) -> UIColor {
+    @objc open class func colorConversion(colorValue: String, alpha: CGFloat = 1) -> UIColor {
         var str = colorValue.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
         if str.hasPrefix("#") {
             str = str.replacingOccurrences(of: "#", with: "")
@@ -339,7 +339,7 @@ open class Tools {
     }
     
     //设置圆角并描边
-   open class func masksToBounds(cornerView:UIView,cornerRadius:CGFloat = 0 , borderWidth:CGFloat = 0 , borderColor : UIColor) {
+   @objc open class func masksToBounds(cornerView:UIView,cornerRadius:CGFloat = 0 , borderWidth:CGFloat = 0 , borderColor : UIColor) {
         cornerView.layer.cornerRadius = cornerRadius
         cornerView.layer.borderWidth = borderWidth
         cornerView.layer.borderColor = borderColor.cgColor
@@ -352,7 +352,7 @@ open class Tools {
     ///   - corners: 需要实现为圆角的角，可传入多个
     ///   - radii: 圆角半径
     //    let corners: UIRectCorner = [.bottomLeft,.bottomRight]
-    open class  func serCorner( _ view : UIView , byRoundingCorners corners: UIRectCorner, radii: CGFloat) {
+    @objc open class  func serCorner( _ view : UIView , byRoundingCorners corners: UIRectCorner, radii: CGFloat) {
            let maskPath = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radii, height: radii))
            let maskLayer = CAShapeLayer()
            maskLayer.frame = view.bounds
@@ -362,7 +362,7 @@ open class Tools {
     
     
     //设置阴影背景
-    open class func setShadow(view:UIView,width:CGFloat,bColor:UIColor,
+    @objc open class func setShadow(view:UIView,width:CGFloat,bColor:UIColor,
                    sColor:UIColor,offset:CGSize,opacity:Float,radius:CGFloat) {
         //设置视图边框宽度
         view.layer.borderWidth = width
@@ -380,12 +380,12 @@ open class Tools {
         view.layer.shadowOffset = offset
     }
     
-   open class func getViewController(_ storyboard : String,_ identifier : String)  -> UIViewController? {
+   @objc open class func getViewController(_ storyboard : String,_ identifier : String)  -> UIViewController? {
         let bord = UIStoryboard(name: storyboard, bundle: nil)
         return bord.instantiateViewController(withIdentifier: identifier)
     }
     
-    open class func pushIndexView(_ baseView : UIViewController, storyboard : String, identifier : String, hideBottom : Bool = true, animator : Bool = true, index : Int = 0 , isNoContains : Bool = true  , fun:(UIViewController) -> Void) {
+    @objc open class func pushIndexView(_ baseView : UIViewController, storyboard : String, identifier : String, hideBottom : Bool = true, animator : Bool = true, index : Int = 0 , isNoContains : Bool = true  , fun:(UIViewController) -> Void) {
             let bord = UIStoryboard(name: storyboard, bundle: nil)
             let vw = bord.instantiateViewController(withIdentifier: identifier)
             let navUI = vw as! UINavigationController
@@ -406,7 +406,7 @@ open class Tools {
            fun(childView)
     }
 
-    open class func addTitleView(baseView : UIViewController, title : String?) -> UILabel{
+    @objc open class func addTitleView(baseView : UIViewController, title : String?) -> UILabel{
 
           let navigationH : CGFloat = UIApplication.shared.statusBarFrame.height == 44 ? 88 : 64
           let titleView = UILabel(frame: CGRect(x: 0 , y: 0 , width: UIScreen.main.bounds.size.width - 100, height: navigationH))
@@ -431,26 +431,10 @@ open class Tools {
            return centerView
     }
 
-    open  class func addTitleView(view : UIView, navigationItem : UINavigationItem, title : String?) {
 
-        let navigationH : CGFloat = UIApplication.shared.statusBarFrame.height == 44 ? 88 : 64
-        let titleView = UILabel(frame: CGRect(x: 0 , y: 0 , width: UIScreen.main.bounds.size.width - 100, height: navigationH))
-          navigationItem.titleView = titleView
-          DispatchQueue.main.async {
-              let width = UIScreen.main.bounds.size.width  - 100
-              let centerView = UILabel()
-              centerView.frame = CGRect(x: (UIScreen.main.bounds.size.width - width) / 2, y: navigationH - 44, width: width, height: 44)
-              centerView.frame = (view.window?.convert(centerView.frame, to: navigationItem.titleView))!
-              centerView.text = title
-              centerView.textAlignment = .center
-              centerView.font = UIFont.boldSystemFont(ofSize: 17)
-              centerView.textColor = UIColor.black
-              navigationItem.titleView?.addSubview(centerView)
-          }
-    }
 
     
-    open class func pushView(_ baseView : UIViewController, storyboard : String, identifier : String, hideBottom : Bool = true, animator : Bool = true, removeSelf : Bool = false , isNoContains : Bool = true  , fun:(UIViewController) -> Void) {
+    @objc open class func pushView(_ baseView : UIViewController, storyboard : String, identifier : String, hideBottom : Bool = true, animator : Bool = true, removeSelf : Bool = false , isNoContains : Bool = true  , fun:(UIViewController) -> Void) {
         let bord = UIStoryboard(name: storyboard, bundle: nil)
         let vw = bord.instantiateViewController(withIdentifier: identifier)
         let navUI = vw as! UINavigationController
@@ -478,7 +462,7 @@ open class Tools {
     }
     
     /// 表格中section区间内从第n行开始增加rows行
-       open class func insertRows(count : Int, at tableView : UITableView, from : Int, where sectionEqual : Int) {
+       @objc open class func insertRows(count : Int, at tableView : UITableView, from : Int, where sectionEqual : Int) {
            var indexPaths = [IndexPath]()
            for i in 0..<count {
                indexPaths.append(IndexPath(row: from + i, section: sectionEqual))
@@ -486,7 +470,7 @@ open class Tools {
            tableView.insertRows(at: indexPaths, with: UITableView.RowAnimation.none)
        }
        
-      open class func removeRows(count : Int, at tableView : UITableView, from : Int, where sectionEqual : Int){
+      @objc open class func removeRows(count : Int, at tableView : UITableView, from : Int, where sectionEqual : Int){
            var indexPaths = [IndexPath]()
            for i in 0..<count {
                indexPaths.append(IndexPath(row: from + i, section: sectionEqual))
@@ -495,7 +479,7 @@ open class Tools {
        }
     
     
-    open class func reloadRows(oldCount : Int , newCount : Int , at tableView : UITableView , where sectionEqual : Int) {
+    @objc open class func reloadRows(oldCount : Int , newCount : Int , at tableView : UITableView , where sectionEqual : Int) {
         let add = newCount > oldCount
         let maxCount = add ? newCount : oldCount
         let minCount = !add ? newCount : oldCount
@@ -512,7 +496,7 @@ open class Tools {
         }
     }
     
-    open class func updateRows(oldCount : Int , newCount : Int , at tableView : UITableView , where sectionEqual : Int , beginRow : Int = 0) {
+    @objc open class func updateRows(oldCount : Int , newCount : Int , at tableView : UITableView , where sectionEqual : Int , beginRow : Int = 0) {
         if oldCount != newCount {
             tableView.beginUpdates()
             Tools.reloadRows(oldCount: oldCount, newCount: newCount, at: tableView, where: sectionEqual)
@@ -531,7 +515,7 @@ open class Tools {
     }
        
     // 添加毛玻璃
-       open class func addBlurSetWith(_ imageView: UIImageView) {
+       @objc open class func addBlurSetWith(_ imageView: UIImageView) {
            
            //首先创建一个模糊效果
            let blurEffect = UIBlurEffect(style: .light)
@@ -544,7 +528,7 @@ open class Tools {
        }
     
     //验证手机号码
-     open class func isTelphoneNumber(_ str: String) -> Bool {
+     @objc open class func isTelphoneNumber(_ str: String) -> Bool {
           let num = str
           let mobile = "(1)\\d{10}$"
           let regextestmobile = NSPredicate(format: "SELF MATCHES %@",mobile)
@@ -552,7 +536,7 @@ open class Tools {
       }
       
     
-    open class func bytesToAvaiUnit(bytes : CGFloat) -> String{
+    @objc open class func bytesToAvaiUnit(bytes : CGFloat) -> String{
           if bytes < 10 {
               return "0KB"
           }else if bytes >= 10 && bytes < 1024{
@@ -568,7 +552,7 @@ open class Tools {
     
     
     
-    open class func getTextFirstX(_ textCount : Int , spacing : CGFloat , textSize : CGFloat , centreX : CGFloat) -> CGFloat
+    @objc open class func getTextFirstX(_ textCount : Int , spacing : CGFloat , textSize : CGFloat , centreX : CGFloat) -> CGFloat
     {
         if textCount == 0
         {

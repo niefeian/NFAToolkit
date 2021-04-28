@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'NFAToolkit'
-  s.version          = '0.1.3'
+  s.version          = '0.1.5'
   s.summary          = '普通工具类'
 
 # This description is used to generate tags and improve search results.
@@ -32,9 +32,9 @@ TODO: Add long description of the pod here.
 
   s.source_files = 'NFAToolkit/Classes/**/*'
   s.swift_version = '5.0'
-  # s.resource_bundles = {
-  #   'NFAToolkit' => ['NFAToolkit/Assets/*.png']
-  # }
+    s.resource_bundles = {
+    'NFAToolkit' => ['NFAToolkit/Assets/*']
+    }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'

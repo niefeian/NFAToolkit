@@ -37,7 +37,7 @@ public func showTipsWindow(_ tips : String = "系统错误", delayTime : CGFloat
         tipsView.addSubview(label)
     }
 
-    label.text = tips
+    label.text = tips.toCNString
     label.sizeToFit()
     tipsView.frame = CGRect(x: 0, y: 0, width: label.width + 20, height: label.height + 20)
     label.frame = CGRect(x: 10, y: 10, width: label.width, height: label.height)
@@ -169,6 +169,15 @@ public extension UIColor {
 }
 
 
+public extension Data {
+    
+    var utf8Encoding : String{
+        return String.init(data: self, encoding: .utf8) ?? ""
+    }
+    
+    
+}
+
 import CommonCrypto
 public extension String {
     
@@ -205,6 +214,19 @@ public extension String {
        return nil
     }
     
+    
+    var josn : NSDictionary?{
+        if let data = Data(base64Encoded: self) {
+            do {
+                let jsonData:Any = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers)
+                if let dic = jsonData as? NSDictionary {
+                    return dic
+                }
+            } catch _ {    
+            }
+        }
+       return nil
+    }
     
     func stringToDic() -> [String:Any]? {
         return self.map
@@ -396,6 +418,15 @@ public extension String {
         return regex?.stringByReplacingMatches(in: self, options: [],
                                               range: NSMakeRange(0, self.count),
                                               withTemplate: with) ?? self
+    }
+    
+    
+    func getWith(_ size : UIFont) -> CGFloat{
+        let label = UILabel()
+        label.font = size
+        label.text = self
+        label.sizeToFit()
+        return label.width
     }
 }
 
@@ -740,3 +771,8 @@ extension UIImage {
     }
 }
 
+public extension UIButton{
+    func setTitleCN(_ title: String?, for state: UIControl.State){
+        setTitle(title?.toCNString, for: state)
+    }
+}
