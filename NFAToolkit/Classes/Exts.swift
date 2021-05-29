@@ -129,7 +129,7 @@ public extension CGFloat {
         return self * AppWidth / 375
     }
 
-    var pd6sH : CGFloat {
+     var pd6sH : CGFloat {
         return self * AppWidth / 375
     }
 
@@ -148,7 +148,7 @@ public extension Int {
 }
 
 
-public extension UIColor {
+@objc public extension UIColor {
    class func initString( _ colorValue : String , alpha: CGFloat = 1) -> UIColor{
         var str = colorValue.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
           if str.hasPrefix("#") {

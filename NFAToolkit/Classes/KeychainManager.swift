@@ -9,9 +9,9 @@
 import UIKit
 import AdSupport
 
-open class KeychainManager {
+@objc open class KeychainManager : NSObject {
     // TODO: 创建查询条件
-   open class func createQuaryMutableDictionary(identifier:String)->NSMutableDictionary{
+    @objc   open class func createQuaryMutableDictionary(identifier:String)->NSMutableDictionary{
         // 创建一个条件字典
         let keychainQuaryMutableDictionary = NSMutableDictionary.init(capacity: 0)
         // 设置条件存储的类型
@@ -26,7 +26,7 @@ open class KeychainManager {
     }
     
     // TODO: 存储数据
-   open class func keyChainSaveData(data:Any ,withIdentifier identifier:String)->Bool {
+    @objc  open class func keyChainSaveData(data:Any ,withIdentifier identifier:String)->Bool {
         // 获取存储数据的条件
         let keyChainSaveMutableDictionary = self.createQuaryMutableDictionary(identifier: identifier)
         // 删除旧的存储数据
@@ -42,7 +42,7 @@ open class KeychainManager {
     }
 
     // TODO: 更新数据
-   open class func keyChainUpdata(data:Any ,withIdentifier identifier:String)->Bool {
+    @objc  open class func keyChainUpdata(data:Any ,withIdentifier identifier:String)->Bool {
         // 获取更新的条件
         let keyChainUpdataMutableDictionary = self.createQuaryMutableDictionary(identifier: identifier)
         // 创建数据存储字典
@@ -59,7 +59,7 @@ open class KeychainManager {
     
     
     // TODO: 获取数据
-   open class func keyChainReadData(identifier:String)-> Any {
+    @objc  open class func keyChainReadData(identifier:String)-> Any {
         var idObject:Any?
         // 获取查询条件
         let keyChainReadmutableDictionary = self.createQuaryMutableDictionary(identifier: identifier)
@@ -81,14 +81,14 @@ open class KeychainManager {
     
     
     // TODO: 删除数据
-   open class func keyChianDelete(identifier:String)->Void{
+    @objc  open class func keyChianDelete(identifier:String)->Void{
         // 获取删除的条件
         let keyChainDeleteMutableDictionary = self.createQuaryMutableDictionary(identifier: identifier)
         // 删除数据
         SecItemDelete(keyChainDeleteMutableDictionary)
     }
     
-    open class func getIMEI() -> String{
+    @objc   open class func getIMEI() -> String{
          if let imei = keyChainReadData(identifier: "imei") as? String , imei.count > 0 {
              return imei
          }
@@ -101,7 +101,7 @@ open class KeychainManager {
          return imei
     }
     
-    class func getUUID() -> String{
+    @objc  class func getUUID() -> String{
        let uc = CFUUIDCreate(nil)
        let uuid  = CFUUIDCreateString(nil, uc)
        return uuid! as String
