@@ -8,7 +8,7 @@
 
 import Foundation
 
-open class DateUtil {
+@objc open class DateUtil : NSObject {
       
     public static  let zodiacs: [String] = ["鼠年", "牛年", "虎年", "兔年", "龙年", "蛇年", "马年", "羊年", "猴年", "鸡年", "狗年", "猪年"]
     public static let heavenlyStems: [String] = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"]
@@ -267,36 +267,46 @@ open class DateUtil {
       }
       
       
-      /// 获得显示显示：原始格式：yyyyMMddHHmmss。
-      /// 刚刚、xx分钟前、xx小时前、同一年的显示月-日，最后yyyy/MM/dd
-      open class func getShowTime2(_ time : String, format : String = "yyyyMMddHHmmss") -> String{
-          let dateTime = DateUtil.formatStrToDate(time, format: format)
-          let curDate = DateUtil.formatDateToStr(dateTime, format : "yyyy/MM/dd")
-          let today = DateUtil.curDate()
-          let date = DateUtil.formatDateToStr(today, format : "yyyy/MM/dd")
-          var ret : String!
-          if date == curDate {
-              // 同一天
-              let oldTime = DateUtil.formatStrToDate(time, format: format).timeIntervalSince1970
-              let nowTime = getTimeSince1970()
-              let sub = nowTime - oldTime
-              if sub < 60 {
-                  ret = "刚刚"
-              } else if sub < 60 * 60 {
-                  ret = "\(Int(sub / 60))分钟前"
-              } else {
-                  ret = "\(Int(sub / 3600))小时前"
-              }
-          } else {
-              if (date.prefix(5) == curDate.prefix(5)) {
-                  // 同一年
-                  ret = DateUtil.formatDateToStr(dateTime, format : "MM-dd")
-              } else {
-                  ret = curDate
-              }
-          }
-          return ret
-      }
+    /// 获得显示显示：原始格式：yyyyMMddHHmmss。
+    /// 刚刚、xx分钟前、xx小时前、同一年的显示月-日，最后yyyy/MM/dd
+    @objc open class func getShowTime2(_ time : String, format : String = "yyyyMMddHHmmss") -> String{
+        let dateTime = DateUtil.formatStrToDate(time, format: format)
+        return showTime(forTimeDate: dateTime)
+    }
+    
+    
+    @objc open class func showTime(timeTimeInterval : Double) -> String{
+        let dateTime = Date.init(timeIntervalSince1970: TimeInterval(timeTimeInterval))
+        return showTime(forTimeDate: dateTime)
+    }
+    
+    @objc open class func showTime(forTimeDate : Date) -> String{
+        
+        let curDate = DateUtil.formatDateToStr(forTimeDate, format : "yyyy/MM/dd")
+        let today = DateUtil.curDate()
+        let date = DateUtil.formatDateToStr(today, format : "yyyy/MM/dd")
+        var ret : String!
+        if date == curDate {
+            let oldTime = forTimeDate.timeIntervalSince1970
+            let nowTime = getTimeSince1970()
+            let sub = nowTime - oldTime
+            if sub < 60 {
+                ret = "刚刚"
+            } else if sub < 60 * 60 {
+                ret = "\(Int(sub / 60))分钟前"
+            } else {
+                ret = "\(Int(sub / 3600))小时前"
+            }
+        } else {
+            if (date.prefix(5) == curDate.prefix(5)) {
+                ret = DateUtil.formatDateToStr(forTimeDate, format : "MM-dd")
+            } else {
+                ret = curDate
+            }
+        }
+        return ret
+    }
+    
       
       /// 返回MM-dd HH:mm 格式
       open class func getShowDateTime(_ time : String, format : String = "yyyyMMddHHmmss") -> String{
@@ -315,12 +325,12 @@ open class DateUtil {
           return ret
       }
       
-      /// 获得显示显示：原始格式：yyyyMMddHHmmss
+    /// 获得显示显示：原始格式：yyyyMMddHHmmss
       open class func getShowTime(_ time : String, format : String = "yyyyMMddHHmmss") -> String{
           return getShowDate(DateUtil.formatStrToDate(time, format: format))
       }
     
-    open class func getShowDate(_ dateTime : Date) -> String {
+    @objc open class func getShowDate(_ dateTime : Date) -> String {
         let curDate = DateUtil.formatDateToStr(dateTime, format : "yyyy/MM/dd")
         let today = DateUtil.curDate()
         let date = DateUtil.formatDateToStr(today, format : "yyyy/MM/dd")
