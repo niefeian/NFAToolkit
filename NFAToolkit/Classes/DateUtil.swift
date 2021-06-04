@@ -161,7 +161,7 @@ import Foundation
       }
       
       /// 获取格式化的日期
-      open class func formatDateToStr(_ date : Date, format : String) -> String {
+     @objc open class func formatDateToStr(_ date : Date, format : String) -> String {
           let df = DateFormatter()
           df.dateFormat = format
           return df.string(from: date)
