@@ -10,21 +10,7 @@ import Foundation
 
 @objc open class DateUtil : NSObject {
       
-    public static  let zodiacs: [String] = ["鼠年", "牛年", "虎年", "兔年", "龙年", "蛇年", "马年", "羊年", "猴年", "鸡年", "狗年", "猪年"]
-    public static let heavenlyStems: [String] = ["甲", "乙", "丙", "丁", "戊", "己", "庚", "辛", "壬", "癸"]
-    public static let earthlyBranches: [String] = ["子", "丑", "寅", "卯", "辰", "巳", "午", "未", "申", "酉", "戌", "亥"]
-    public static let timeodaa = ["00:00-00:59早子","01:00-02:59丑时","03:00-04:59寅时","05:00-06:59卯时","07:00-08:59辰时","09:00-10:59巳时","11:00-12:59午时","13:00-14:59未时","15:00-16:59申时","17:00-18:59酉时","19:00-20:59戌时","21:00-22:59亥时","23:00-23:59晚子"]
-    
-     public static let chineseTimedate = ["早子","丑时","丑时","寅时","寅时","卯时","卯时","辰时","辰时","巳时","巳时","午时","午时","未时","未时","申时","申时","酉时","酉时","戌时","戌时","亥时","亥时","晚子"]
-    
-    
-    public static let chineseMonths = ["正月","二月","三月","四月", "五月", "六月", "七月", "八月","九月", "十月", "冬月", "腊月"]
-    public static let chineseDays = [ "初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十","十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十","廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"]
-    
-    //星座国外
-    public static let usazodiacs = ["白羊座","金牛座","双子座","巨蟹座","狮子座","处女座","天秤座","天蝎座","射手座","摩羯座","水瓶座","双鱼座"]
-    
-    
+
       /// 时间差：客户端与服务器的时间差,采用服务端-客户端
       fileprivate static var timediff : TimeInterval = 0
       
@@ -194,7 +180,7 @@ import Foundation
           return formatStrToDate(strDate, format: "yyyy-MM-dd")
       }
       
-      open class func formatStrToDate(_ strDate : String, format : String) -> Date {
+    @objc open class func formatStrToDate(_ strDate : String, format : String) -> Date {
           let fmt = DateFormatter()
           fmt.dateFormat = format
           return fmt.date(from: strDate)!
@@ -482,36 +468,6 @@ import Foundation
           }
       }
       
-      open class func erayWeekOfYear(_ date : Date) -> String {
-          let calendar: Calendar = Calendar(identifier: .gregorian)
-          return  " 第 \(calendar.component(.weekOfYear, from: date)) 周 " +  featureWeekday(date)
-      }
-      
-      open class func erayAll(_ date : Date) -> String {
-          let calendar: Calendar = Calendar(identifier: .chinese)
-          return era(year: calendar.component(.year, from: date)) + zodiac(date) + " " + era(year: calendar.component(.month, from: date)) + "月 "  +   era(year: calendar.component(.day, from: date)) + "日"
-      }
-      
-      private class func era(year: Int) -> String {
-          
-          let heavenlyStemIndex: Int = (year - 1) % heavenlyStems.count
-          let heavenlyStem: String = heavenlyStems[heavenlyStemIndex]
-          
-          let earthlyBrancheIndex: Int = (year - 1) % earthlyBranches.count
-          let earthlyBranche: String = earthlyBranches[earthlyBrancheIndex]
-          return heavenlyStem + earthlyBranche
-      }
-      
-      // 生肖
-      open class func zodiac(_ date : Date) -> String {
-          let calendar: Calendar = Calendar(identifier: .chinese)
-          return zodiac(year: calendar.component(.year, from: date))
-      }
-      
-      private class  func zodiac(year: Int) -> String {
-          let zodiacIndex: Int = (year - 1) % zodiacs.count
-          return zodiacs[zodiacIndex]
-      }
       
     open class func reDayCount(_ year : Int ,_ month : Int) -> Int {
         if [1,3,5,7,8,10,12].contains(month){
