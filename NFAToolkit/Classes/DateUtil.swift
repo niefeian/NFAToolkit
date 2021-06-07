@@ -147,9 +147,7 @@ import Foundation
       return day < 10 ?  "0\(day)" : "\(day)"
   }
   
-  
-  //根据年月获得当月共多少天
-     
+
     
     open class func dateToStrCN(_ date : Date) -> String {
         return formatDateToStr(date, format: "yyyy年MM月dd")
@@ -311,7 +309,7 @@ import Foundation
         return ret
     }
     
-  /// 获得显示显示：原始格式：yyyyMMddHHmmss
+    /// 获得显示显示：原始格式：yyyyMMddHHmmss
     open class func getShowTime(_ time : String, format : String = "yyyyMMddHHmmss") -> String{
         return getShowDate(DateUtil.formatStrToDate(time, format: format))
     }
@@ -482,4 +480,17 @@ import Foundation
         return 30
       }
   }
+    
+    
+    /*时间戳转日期*/
+    
+    // 获得显示显示：原始格式：yyyyMMddHHmmss
+    @objc open class func timeIntervalToDate(timeInterval : Double, format : String ) -> String{
+        return DateUtil.formatDateToStr(Date.init(timeIntervalSince1970: timeInterval), format: format);
+    }
+    
+    @objc open class func timeIntervalToDate(timeIntervalStr : String, format : String = "yyyyMMddHHmmss") -> String{
+        return self.timeIntervalToDate(timeInterval: Double(timeIntervalStr) ?? 0, format: format)
+    }
 }
+

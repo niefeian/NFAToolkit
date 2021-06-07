@@ -501,67 +501,77 @@ public extension UITableViewCell {
     }
 }
 
+//使文字处理起来个更简单
+@objc public extension NSString{
+   
+    func set(lineSpacing : CGFloat = 10 ) -> NSAttributedString {
+       return (self as String).set(lineSpacing: lineSpacing)
+    }
+    
+    func set(lineSpacing : CGFloat = 5 , array : NSArray) -> NSAttributedString{
+        if ((array as? [AppModel]) != nil)
+        {
+            return (self as String).set(lineSpacing: lineSpacing, arrayModel: array as! [AppModel], offSize: 0)
+        }
+        else{
+            return self.set(lineSpacing: lineSpacing)
+        }
+    }
+}
+
+public extension String{
+    //设置文字间距
+    func set(lineSpacing:CGFloat = 10 ) -> NSAttributedString {
+        let paraph = NSMutableParagraphStyle()
+        paraph.lineSpacing = lineSpacing
+        return NSAttributedString(string: self, attributes: [NSAttributedString.Key.paragraphStyle: paraph]);
+    }
+
+    //    设置文字不同显示
+    func set(lineSpacing:CGFloat = 5 , array : [(String , UIColor , UIFont)] , offSize : Int = 0) -> NSAttributedString {
+        
+        let paraph = NSMutableParagraphStyle()
+        paraph.lineSpacing = lineSpacing
+        let attributes = [NSAttributedString.Key.paragraphStyle: paraph]
+        let attrString = NSMutableAttributedString(string: self , attributes: attributes)
+
+       for arr in array {
+           let attr: [NSAttributedString.Key : Any] = [.font: arr.2 ,.foregroundColor: arr.1]
+           let i  = self.positionOf(sub: arr.0) + offSize
+           if  i >= 0  && i < self.count {
+                attrString.addAttributes(attr, range:NSRange(location: self.positionOf(sub: arr.0) + offSize, length: arr.0.count))
+           }
+       }
+        return attrString;
+    }
+    
+    func set(lineSpacing:CGFloat = 5 , arrayModel : [AppModel] , offSize : Int = 0) -> NSAttributedString {
+        
+        let paraph = NSMutableParagraphStyle()
+        paraph.lineSpacing = lineSpacing
+        let attributes = [NSAttributedString.Key.paragraphStyle: paraph]
+        let attrString = NSMutableAttributedString(string: self , attributes: attributes)
+
+       for model in arrayModel {
+        let attr: [NSAttributedString.Key : Any] = [.font: model.font ,.foregroundColor: model.color]
+           let i  = self.positionOf(sub: model.string) + offSize
+           if  i >= 0  && i < self.count {
+                attrString.addAttributes(attr, range:NSRange(location: self.positionOf(sub: model.string) + offSize, length: model.string.count))
+           }
+       }
+        return attrString;
+    }
+    
+    func set(lineSpacing:CGFloat = 5 , array : [(String , UIColor , UIFont)]) -> NSAttributedString{
+        return self.set(lineSpacing: lineSpacing, array: array, offSize: 0)
+    }
+    
+}
+
 public extension UILabel {
     
     func setFont(_ font : CGFloat){
        self.font = UIFont.systemFont(ofSize: pd6sW(font))
-    }
-
-    func setFont(_ font : CGFloat , weight : CGFloat){
-        if #available(iOS 8.2, *) {
-            self.font = UIFont.systemFont(ofSize: pd6sW(font), weight: UIFont.Weight.init(pd6sW(weight)))
-        } else {
-            // Fallback on earlier versions
-        }
-    }
-
-
-    func setLable(text : String ,lineSpacing:CGFloat = 10 ) {
-       let paraph = NSMutableParagraphStyle()
-       paraph.lineSpacing = lineSpacing
-       let attributes = [NSAttributedString.Key.paragraphStyle: paraph]
-       self.attributedText = NSAttributedString(string: text, attributes: attributes)
-    }
-
-    func setLineSpacing(_ lineSpacing : CGFloat = 5 ) {
-       self.setLable(text: self.text ?? "", lineSpacing: lineSpacing)
-    }
-
-    func setAttrString2(string : String , lineSpacing:CGFloat = 5 , array : [([String],UIColor,CGFloat)]) {
-        var arrays = [(String,UIColor,CGFloat)]()
-        for arr in array {
-            for str in arr.0
-            {
-                arrays.append((str, arr.1, arr.2))
-            }
-          }
-         self.attributedText = string.getAttrString(lineSpacing: lineSpacing, array: arrays, arrayFont: [], arrays: [])
-    }
-
-    func setAttrString(string : String , lineSpacing:CGFloat = 5 , array : [(String,UIColor,CGFloat)] , offSize : Int = 0) {
-          let paraph = NSMutableParagraphStyle()
-          paraph.lineSpacing = lineSpacing
-          let attributes = [NSAttributedString.Key.paragraphStyle: paraph]
-       let attrString = NSMutableAttributedString(string: string , attributes: attributes)
-
-       for arr in array {
-           let attr: [NSAttributedString.Key : Any] = [.font: UIFont.systemFont(ofSize: arr.2),.foregroundColor: arr.1]
-           let i  = string.positionOf(sub: arr.0) + offSize
-           if  i >= 0  && i < string.count {
-               attrString.addAttributes(attr, range:NSRange(location: string.positionOf(sub: arr.0) + offSize, length: arr.0.count))
-           }
-       }
-       self.attributedText = attrString
-    }
-    
-
-    
-    func setAttrStringBy( string : String , lineSpacing:CGFloat = 5 , array : [(String,UIColor,CGFloat)] = [(String,UIColor,CGFloat)](), arrayFont : [(String,UIColor,UIFont)]  = [(String,UIColor,UIFont)](), arrays : [(String,[NSAttributedString.Key : Any])] = [(String,[NSAttributedString.Key : Any])]()) {
-        self.attributedText = string.getAttrString(lineSpacing: lineSpacing, array: array, arrayFont: arrayFont, arrays: arrays)
-    }
-
-    func setAttrStrings(string : String , lineSpacing:CGFloat = 5 , array : [(String,[NSAttributedString.Key : Any])]) {
-        self.attributedText = string.getAttrString(lineSpacing: lineSpacing, array: [], arrayFont: [], arrays: array)
     }
 }
 
