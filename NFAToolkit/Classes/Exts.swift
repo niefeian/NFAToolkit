@@ -149,6 +149,11 @@ public extension Int {
 
 
 @objc public extension UIColor {
+    
+    class func initString( _ colorValue : String) -> UIColor{
+        return initString(colorValue, alpha: 1)
+    }
+    
    class func initString( _ colorValue : String , alpha: CGFloat = 1) -> UIColor{
         var str = colorValue.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
           if str.hasPrefix("#") {
