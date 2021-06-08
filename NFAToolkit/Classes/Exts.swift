@@ -227,7 +227,7 @@ public extension String {
                 if let dic = jsonData as? NSDictionary {
                     return dic
                 }
-            } catch _ {    
+            } catch _ {
             }
         }
        return nil
@@ -521,6 +521,10 @@ public extension UITableViewCell {
         else{
             return self.set(lineSpacing: lineSpacing)
         }
+    }
+    
+    func dictionary() -> NSDictionary?{
+        return (self as String).map as NSDictionary?
     }
 }
 
