@@ -453,6 +453,28 @@ public extension Dictionary {
     
 }
 
+@objc public extension NSArray {
+    
+    func splicingToString(splicing : String) ->String{
+        var string = "";
+        for item in self {
+            if let itemstr = item as? String
+            {
+                if string == ""
+                {
+                    string = itemstr
+                }
+                else
+                {
+                    string += splicing + itemstr
+                }
+            }
+        }
+        return string;
+    }
+}
+
+
 public extension Array {
     
     func arrayToString() ->String?{
